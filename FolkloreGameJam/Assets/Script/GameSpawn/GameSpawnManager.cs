@@ -11,7 +11,12 @@ public class GameSpawnManager : MonoBehaviour
     public List<GameObject> gameSpawnBox = new List<GameObject>();
 
     public GameObject Canvas;
+
+    [Header("다트")]
     public bool isPushCheck;
+
+    [Header("제기차기")]
+    public bool isClickCheck;
 
     void Start()
     {
@@ -25,6 +30,7 @@ public class GameSpawnManager : MonoBehaviour
 
     public void Game_Summon()
     {
+        isPushCheck = false;
         Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], transform.position, Quaternion.identity, Canvas.transform);
     }
 }

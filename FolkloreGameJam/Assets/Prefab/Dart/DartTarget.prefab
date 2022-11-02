@@ -137,5 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dartPin: {fileID: 135650714608741316, guid: cece877dadb0d70458b7210b27a38502, type: 3}
-  rigidbody2D: {fileID: 8372492574201718294}
   speed: 100

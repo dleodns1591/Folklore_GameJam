@@ -10,7 +10,7 @@ public class DartBackGround : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        
+        Time.timeScale = 1;
     }
 
     void Update()
