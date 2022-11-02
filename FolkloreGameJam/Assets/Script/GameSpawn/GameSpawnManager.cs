@@ -25,6 +25,6 @@ public class GameSpawnManager : MonoBehaviour
 
     public void Game_Summon()
     {
-        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], transform.position, Quaternion.identity).transform.SetParent(Canvas.transform);
+        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], transform.position, Quaternion.identity, Canvas.transform);
     }
 }
