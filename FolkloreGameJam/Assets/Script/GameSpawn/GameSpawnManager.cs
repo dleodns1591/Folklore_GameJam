@@ -10,7 +10,7 @@ public class GameSpawnManager : MonoBehaviour
     public List<GameObject> gameSpawner = new List<GameObject>();
     public List<GameObject> gameSpawnBox = new List<GameObject>();
 
-    public GameObject ingameWindow;
+    public GameObject gameBoy;
     public GameObject ingameScreen;
 
     [Header("´ÙÆ®")]
@@ -42,6 +42,6 @@ public class GameSpawnManager : MonoBehaviour
         isPushCheck = false;
         isClickCheck = false;
 
-        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], ingameScreen.transform.position, Quaternion.identity, ingameWindow.transform);
+        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], ingameScreen.transform.position, Quaternion.identity, gameBoy.transform);
     }
 }

@@ -36,14 +36,18 @@ public class UIManager : MonoBehaviour
     public Button extrasBackBtn;
 
     [Header("ÀÎ°ÔÀÓ")]
-    public GameObject inGameWindow;
     public GameObject title;
+    public GameObject inGameWindow;
+    public GameObject gameBoy;
+
+    public Button charger;
 
     void Start()
     {
         Main_Btns();
         Option_Btns();
         Extras_Btn();
+        Ingmae_Btn();
     }
 
     void Update()
@@ -207,6 +211,14 @@ public class UIManager : MonoBehaviour
         {
             mainWindow.transform.DOLocalMoveY(0, waitTime);
             extrasWindow.transform.DOLocalMoveY(extrasWindowPos, waitTime);
+        });
+    }
+
+    void Ingmae_Btn()
+    {
+        charger.onClick.AddListener(() =>
+        {
+            gameBoy.transform.DOLocalMoveY(-1045, 0.5f);
         });
     }
 }
