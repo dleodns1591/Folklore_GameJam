@@ -10,7 +10,8 @@ public class GameSpawnManager : MonoBehaviour
     public List<GameObject> gameSpawner = new List<GameObject>();
     public List<GameObject> gameSpawnBox = new List<GameObject>();
 
-    public GameObject Canvas;
+    public GameObject ingameWindow;
+    public GameObject ingameScreen;
 
     [Header("´ÙÆ®")]
     public bool isPushCheck;
@@ -41,6 +42,6 @@ public class GameSpawnManager : MonoBehaviour
         isPushCheck = false;
         isClickCheck = false;
 
-        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], transform.position, Quaternion.identity, Canvas.transform);
+        Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], ingameScreen.transform.position, Quaternion.identity, ingameWindow.transform);
     }
 }

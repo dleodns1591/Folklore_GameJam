@@ -86,18 +86,18 @@ public class UIManager : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
 
         blackScreen.transform.DOLocalMoveX(0, waitTime);
-        inGameWindow.transform.DOLocalMoveX(0, waitTime);
+        inGameWindow.transform.DOLocalMoveX(0, 2);
 
         yield return new WaitForSeconds(2);
 
         mainWindow.transform.DOLocalMoveX(rightMovePos, waitTime);
         blackScreen.transform.DOLocalMoveX(rightMovePos, waitTime);
-        sequence.Append(title.transform.DOLocalMoveX(0, waitTime));
+        sequence.Append(title.transform.DOLocalMoveX(0, 2));
 
-        yield return new WaitForSeconds(1);
-        title.transform.DOLocalMoveY(700, waitTime);
+        yield return new WaitForSeconds(2);
+        title.transform.DOLocalMoveY(700, 2);
 
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(2);
 
         GameSpawnManager.Inst.Game_Summon();
     }
