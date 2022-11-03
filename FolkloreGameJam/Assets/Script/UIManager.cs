@@ -96,6 +96,10 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         title.transform.DOLocalMoveY(700, waitTime);
+
+        yield return new WaitForSeconds(waitTime);
+
+        GameSpawnManager.Inst.Game_Summon();
     }
 
     public void PlayBtn_Enter()

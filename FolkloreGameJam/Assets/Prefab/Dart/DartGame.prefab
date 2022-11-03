@@ -57,6 +57,7 @@ MonoBehaviour:
   gameTitleBackGround: {fileID: 756660367796776148}
   descriptionText: {fileID: 8178403370225417805}
   dartRigidbody2D: {fileID: 8372492574201718294, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
+  point: {fileID: 0}
 --- !u!1 &756660366350536418
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,14 +221,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7921725, b: 0.37169808, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 654a616e2b046c7428c88052386ac0d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

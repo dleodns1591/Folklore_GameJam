@@ -82,7 +82,7 @@ public class DartTarget : MonoBehaviour
 
     public IEnumerator Pin_Summon()
     {
-        float waitTime = 0.5f;
+        float waitTime = 1f;
 
         if (GameSpawnManager.Inst.isPushCheck == false)
         {

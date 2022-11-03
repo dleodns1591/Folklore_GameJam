@@ -16,11 +16,18 @@ public class GameSpawnManager : MonoBehaviour
     public bool isPushCheck;
 
     [Header("제기차기")]
+    public float pointSpeed;
     public bool isClickCheck;
+    public bool isJegiSummon;
+
+    [Header("줄다리기")]
+    public float enemySpped;
+    public float mySpeed;
+    public bool isLineSummon;
 
     void Start()
     {
-        Game_Summon();
+
     }
 
     void Update()
@@ -30,7 +37,10 @@ public class GameSpawnManager : MonoBehaviour
 
     public void Game_Summon()
     {
+        isJegiSummon = false;
         isPushCheck = false;
+        isClickCheck = false;
+
         Instantiate(gameSpawner[Random.Range(0, gameSpawner.Count)], transform.position, Quaternion.identity, Canvas.transform);
     }
 }

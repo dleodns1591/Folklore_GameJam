@@ -10,6 +10,7 @@ public class GameSpawn : MonoBehaviour
     {
         EDart,
         EJegichagi,
+        ETugofwar,
     }
     public EGame eGame;
 
@@ -23,6 +24,9 @@ public class GameSpawn : MonoBehaviour
 
     [Header("게임 : 제기차기")]
     public GameObject point;
+
+    //[Header("게임 : 줄다리기")]
+    
 
     void Start()
     {
@@ -58,14 +62,24 @@ public class GameSpawn : MonoBehaviour
                 break;
             #endregion
 
+            #region 제기차기
             case EGame.EJegichagi:
-                int pointPos = 94;
+                int pointPos = 60;
 
-                //descriptionText.text = "Jegichagi";
-                //yield return new WaitForSeconds(2f);
+                descriptionText.text = "Jegichagi";
+                yield return new WaitForSeconds(2f);
 
-                //gameTitleBackGround.SetActive(false);
-                point.transform.DOLocalMoveX(pointPos, 2f).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+                gameTitleBackGround.SetActive(false);
+                GameSpawnManager.Inst.isJegiSummon = true;
+                point.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.pointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+                break;
+            #endregion
+
+            case EGame.ETugofwar:
+                descriptionText.text = "Tugofwar";
+                yield return new WaitForSeconds(2f);
+                gameTitleBackGround.SetActive(false);
+                GameSpawnManager.Inst.isLineSummon = true;
                 break;
         }
     }
