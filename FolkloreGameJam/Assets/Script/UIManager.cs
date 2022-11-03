@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     public Button optionBtn;
     public Button extrasBtn;
 
+    bool batterStart = false;
+    bool timerStart = false;
+
     [Header("설정")]
     public GameObject optionWindow;
 
@@ -40,19 +43,31 @@ public class UIManager : MonoBehaviour
     public GameObject inGameWindow;
     public GameObject gameBoy;
 
-    public Button charger;
+    public Slider batterySlider;
+
+    public Button chargerBtn;
+    public Button chargerClickBtn;
+
+    public TextMeshProUGUI[] timeText;
+    public float time = 300;
+    int min, sec;
 
     void Start()
     {
+        timeText[0].text = "05";
+        timeText[1].text = "00";
+
         Main_Btns();
         Option_Btns();
         Extras_Btn();
         Ingmae_Btn();
+
     }
 
     void Update()
     {
-        
+        Timer();
+        Battery();
     }
 
     #region 메인버튼 이벤트
@@ -98,13 +113,19 @@ public class UIManager : MonoBehaviour
         blackScreen.transform.DOLocalMoveX(rightMovePos, waitTime);
         sequence.Append(title.transform.DOLocalMoveX(0, 2));
 
+        batterStart = true;
+
         yield return new WaitForSeconds(2);
         title.transform.DOLocalMoveY(700, 2);
 
         yield return new WaitForSeconds(2);
 
+        timerStart = true;
         GameSpawnManager.Inst.Game_Summon();
     }
+
+
+
 
     public void PlayBtn_Enter()
     {
@@ -127,7 +148,7 @@ public class UIManager : MonoBehaviour
     {
         int movePos = -57;
         optionBtn.transform.DOLocalMoveX(movePos, waitTime);
-    }   
+    }
 
     public void ExtraBtn_Enter()
     {
@@ -203,7 +224,6 @@ public class UIManager : MonoBehaviour
 
     void Extras_Btn()
     {
-        float waitTime = 0.5f;
         int extrasWindowPos = -1100;
 
         // 뒤로가기 버튼을 눌렀을 때
@@ -216,9 +236,63 @@ public class UIManager : MonoBehaviour
 
     void Ingmae_Btn()
     {
-        charger.onClick.AddListener(() =>
+        // 충전기 버튼을 눌렀을 때
+        chargerBtn.onClick.AddListener(() =>
         {
-            gameBoy.transform.DOLocalMoveY(-1045, 0.5f);
+            int gmaeBoyPos = 1045;
+            gameBoy.transform.DOLocalMoveY(-gmaeBoyPos, waitTime).SetUpdate(true);
+            Time.timeScale = 0;
+        });
+
+        // 클릭형 충전기 버튼을 눌렀을 때
+        chargerClickBtn.onClick.AddListener(() =>
+        {
+            batterySlider.value += 10;
         });
     }
+
+    public void Battery()
+    {
+        if (batterStart == true)
+        {
+            if (batterySlider.value > 0)
+                batterySlider.value -= Time.unscaledDeltaTime;
+
+            else
+                Debug.Log("battery Zero.");
+        }
+    }
+
+    public void Timer()
+    {
+        if (timerStart == true)
+        {
+            time -= Time.deltaTime;
+
+            min = (int)time / 60;
+            sec = ((int)time - min * 60) % 60;
+
+            if (min <= 0 && sec <= 0)
+            {
+                timeText[0].text = 0.ToString();
+                timeText[1].text = 0.ToString();
+            }
+
+            else
+            {
+                if (sec >= 60)
+                {
+                    min += 1;
+                    sec -= 60;
+                }
+
+                else
+                {
+                    timeText[0].text = min.ToString();
+                    timeText[1].text = sec.ToString();
+                }
+            }
+        }
+    }
+
 }

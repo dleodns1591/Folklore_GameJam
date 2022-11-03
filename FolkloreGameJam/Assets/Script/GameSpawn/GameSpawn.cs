@@ -11,10 +11,12 @@ public class GameSpawn : MonoBehaviour
         EDart,
         EJegichagi,
         ETugofwar,
+        EDarumaOtoshi,
     }
     public EGame eGame;
 
     [Header("게임 : 다트")]
+    public GameObject dartGame;
     public GameObject dartTarget;
     public GameObject gameTitleBackGround;
 
@@ -23,10 +25,11 @@ public class GameSpawn : MonoBehaviour
     public Rigidbody2D dartRigidbody2D;
 
     [Header("게임 : 제기차기")]
-    public GameObject point;
+    public GameObject jegiPoint;
 
-    //[Header("게임 : 줄다리기")]
-    
+    [Header("게임 : 다루마오토시")]
+    public List<GameObject> randomPiece = new List<GameObject>();
+    public GameObject hammerPoint;
 
     void Start()
     {
@@ -35,11 +38,13 @@ public class GameSpawn : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     IEnumerator MainGame()
     {
+        int pointPos = 60;
+
         switch (eGame)
         {
             #region 다트
@@ -58,28 +63,39 @@ public class GameSpawn : MonoBehaviour
 
                 gameTitleBackGround.SetActive(false);
 
-                Instantiate(dartTarget, new Vector2(posXRandom, posYRandom), Quaternion.identity).transform.parent = gameObject.transform;
+                Instantiate(dartTarget, new Vector2(posXRandom, posYRandom), Quaternion.identity, dartGame.transform);
                 break;
             #endregion
 
             #region 제기차기
             case EGame.EJegichagi:
-                int pointPos = 60;
 
                 descriptionText.text = "Jegichagi";
                 yield return new WaitForSeconds(2f);
 
                 gameTitleBackGround.SetActive(false);
                 GameSpawnManager.Inst.isJegiSummon = true;
-                point.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.pointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+                jegiPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.jegiPointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
                 break;
             #endregion
 
+            #region 줄다리기
             case EGame.ETugofwar:
                 descriptionText.text = "Tugofwar";
                 yield return new WaitForSeconds(2f);
                 gameTitleBackGround.SetActive(false);
                 GameSpawnManager.Inst.isLineSummon = true;
+                break;
+            #endregion
+
+            case EGame.EDarumaOtoshi:
+
+                descriptionText.text = "DarumaOtoshi";
+                yield return new WaitForSeconds(2f);
+
+                gameTitleBackGround.SetActive(false);
+                GameSpawnManager.Inst.isPieceSummon = true;
+                hammerPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.piecePointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
                 break;
         }
     }

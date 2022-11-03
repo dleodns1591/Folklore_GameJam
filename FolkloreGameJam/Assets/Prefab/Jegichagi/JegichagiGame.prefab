@@ -817,7 +817,9 @@ MonoBehaviour:
   gameTitleBackGround: {fileID: 986147596616595189}
   descriptionText: {fileID: 8525371351332021356}
   dartRigidbody2D: {fileID: 8372492574201718294, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
-  point: {fileID: 517828865063893044}
+  jegiPoint: {fileID: 517828865063893044}
+  randomPiece: []
+  hammerPoint: {fileID: 0}
 --- !u!1 &986147597825044234
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,10 @@ TagManager:
   - TimingOut
   - Tugofwar_Win
   - Tugofwar_Lose
+  - RightWall
+  - AimLap
+  - LeftWall
+  - Piece
   layers:
   - Default
   - TransparentFX

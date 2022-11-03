@@ -53,11 +53,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eGame: 0
-  dartTarget: {fileID: 1954495618044761731, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
+  dartGame: {fileID: 756660366293574914}
+  dartTarget: {fileID: 1696831676929224328, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
   gameTitleBackGround: {fileID: 756660367796776148}
   descriptionText: {fileID: 8178403370225417805}
-  dartRigidbody2D: {fileID: 8372492574201718294, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
-  point: {fileID: 0}
+  dartRigidbody2D: {fileID: 1696831676929224325, guid: dd04abf7cdcf940499d2f48258b3ab42, type: 3}
+  jegiPoint: {fileID: 0}
+  randomPiece: []
+  hammerPoint: {fileID: 0}
 --- !u!1 &756660366350536418
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &756660367796776151
 RectTransform:
   m_ObjectHideFlags: 0

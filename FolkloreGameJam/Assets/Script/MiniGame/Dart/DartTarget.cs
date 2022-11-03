@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DartTarget : MonoBehaviour
+public class DartTarget : MonoBehaviour, IPointerClickHandler
 {
 
     [Header("´ÙÆ® ÇÉ")]
@@ -75,7 +75,7 @@ public class DartTarget : MonoBehaviour
                                                            -Camera.main.transform.position.z));
     }
 
-    public void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
         StartCoroutine(Pin_Summon());
     }

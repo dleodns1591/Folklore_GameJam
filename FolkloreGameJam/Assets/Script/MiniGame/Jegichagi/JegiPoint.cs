@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class Point : MonoBehaviour
+public class JegiPoint : MonoBehaviour
 {
     [Header("주요요소")]
     public GameObject jegi;
@@ -38,23 +38,20 @@ public class Point : MonoBehaviour
 
     void Point_MouseEvent()
     {
-        if (Input.GetMouseButtonDown(0) && GameSpawnManager.Inst.isClickCheck == false && GameSpawnManager.Inst.isJegiSummon == true)
+        if (Input.GetMouseButtonDown(0) && GameSpawnManager.Inst.isJegiClickCheck == false && GameSpawnManager.Inst.isJegiSummon == true)
         {
-            GameSpawnManager.Inst.isClickCheck = true;
+            GameSpawnManager.Inst.isJegiClickCheck = true;
             transform.DOKill();
         }
     }
 
     IEnumerator OnTriggerStay2D(Collider2D collision)
     {
-        Vector2 legPos = new Vector2(30, -40);
-        Vector3 legRot = new Vector3(0, 0, -90);
-
         if (collision.CompareTag("TimingIn"))
         {
             isCollisionCheck = true;
 
-            if (GameSpawnManager.Inst.isClickCheck == true && isCheck == false && isCollisionCheck == true)
+            if (GameSpawnManager.Inst.isJegiClickCheck == true && isCheck == false && isCollisionCheck == true)
             {
                 Debug.Log("승리");
                 isCheck = true;
@@ -74,7 +71,7 @@ public class Point : MonoBehaviour
 
         if (collision.CompareTag("TimingOut"))
         {
-            if (GameSpawnManager.Inst.isClickCheck == true && isCheck == false && isCollisionCheck == false)
+            if (GameSpawnManager.Inst.isJegiClickCheck == true && isCheck == false && isCollisionCheck == false)
             {
                 Debug.Log("패배");
                 isCheck = true;
