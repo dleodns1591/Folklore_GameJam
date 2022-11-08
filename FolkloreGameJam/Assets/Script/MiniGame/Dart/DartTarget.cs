@@ -7,11 +7,13 @@ public class DartTarget : MonoBehaviour, IPointerClickHandler
 {
 
     [Header("다트 핀")]
+    public GameObject dartGmae;
     public GameObject dartPin;
 
     [Header("속도")]
     public int speed;
 
+    public GameObject winCheck;
     Rigidbody2D rigidbody2D;
     Vector3 point;
 
@@ -42,28 +44,28 @@ public class DartTarget : MonoBehaviour, IPointerClickHandler
                 Debug.Log("왼쪽");
                 float rightPosX = -2.84f;
 
-                rigidbody2D.AddForce(new Vector2(rightPosX, Random.Range(minY, maxY)) * speed);
+                rigidbody2D.AddForce(new Vector2(rightPosX, Random.Range(minY, maxY)) * (speed * GameManager.Inst.everySpeed));
                 break;
 
             case 1:
                 Debug.Log("오른쪽");
                 float leftPosX = 2.84f;
 
-                rigidbody2D.AddForce(new Vector2(leftPosX, Random.Range(minY, maxY)) * speed);
+                rigidbody2D.AddForce(new Vector2(leftPosX, Random.Range(minY, maxY)) * (speed * GameManager.Inst.everySpeed));
                 break;
 
             case 2:
                 Debug.Log("아래");
                 float bottomPosY = -2.48f;
 
-                rigidbody2D.AddForce(new Vector2(Random.Range(minX, maxX), bottomPosY) * speed);
+                rigidbody2D.AddForce(new Vector2(Random.Range(minX, maxX), bottomPosY) * (speed * GameManager.Inst.everySpeed));
                 break;
 
             case 3:
                 Debug.Log("위");
                 float topPosY = 2.48f;
 
-                rigidbody2D.AddForce(new Vector2(Random.Range(minX, maxX), topPosY) * speed);
+                rigidbody2D.AddForce(new Vector2(Random.Range(minX, maxX), topPosY) * (speed * GameManager.Inst.everySpeed));
                 break;
         }
     }
@@ -78,6 +80,7 @@ public class DartTarget : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         StartCoroutine(Pin_Summon());
+        SoundManager.instance.PlaySoundClip("Darts", SoundType.SFX, 10f);
     }
 
     public IEnumerator Pin_Summon()
@@ -90,7 +93,8 @@ public class DartTarget : MonoBehaviour, IPointerClickHandler
             Instantiate(dartPin, point, Quaternion.identity).transform.parent = gameObject.transform;
             Time.timeScale = 0;
 
-            Debug.Log("Win");
+            winCheck.SetActive(true);
+            SoundManager.instance.PlaySoundClip("success", SoundType.SFX, 10f);
 
             yield return new WaitForSecondsRealtime(waitTime);
             Destroy(transform.parent.gameObject);

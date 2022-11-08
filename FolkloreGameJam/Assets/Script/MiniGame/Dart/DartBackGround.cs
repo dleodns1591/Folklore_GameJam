@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class DartBackGround : MonoBehaviour, IPointerClickHandler
 {
+    public GameObject LoseCheck;
     public GameObject dartPin;
     Vector3 point;
 
@@ -40,12 +42,12 @@ public class DartBackGround : MonoBehaviour, IPointerClickHandler
             Instantiate(dartPin, point, Quaternion.identity).transform.parent = gameObject.transform;
             Time.timeScale = 0;
 
-            Debug.Log("Lose");
+            LoseCheck.SetActive(true);
 
             yield return new WaitForSecondsRealtime(waitTime);
-            Destroy(transform.parent.gameObject);
 
-            GameSpawnManager.Inst.Game_Summon();
+            GameManager.Inst.Initialization();
+            SceneManager.LoadScene("Title");
         }
     }
 }

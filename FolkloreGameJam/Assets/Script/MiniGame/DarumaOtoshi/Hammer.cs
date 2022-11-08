@@ -23,6 +23,7 @@ public class Hammer : MonoBehaviour
 
             yield return new WaitForSeconds(1);
 
+            collision.transform.DOKill();
             Destroy(collision.gameObject);
         }
     }

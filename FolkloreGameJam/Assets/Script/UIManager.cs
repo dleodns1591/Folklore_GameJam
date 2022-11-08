@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     float waitTime = 0.5f;
+
+    public GameObject loseCheck;
 
     [Header("메인")]
     public GameObject mainWindow;
@@ -50,10 +53,13 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI[] timeText;
     public float time = 300;
-    int min, sec;
+    public int min, sec;
+    float batterySpeed = 1;
 
     void Start()
     {
+        Time.timeScale = 1;
+
         timeText[0].text = "05";
         timeText[1].text = "00";
 
@@ -67,7 +73,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         Timer();
-        Battery();
+        StartCoroutine(Battery());
     }
 
     #region 메인버튼 이벤트
@@ -251,20 +257,44 @@ public class UIManager : MonoBehaviour
         });
     }
 
-    public void Battery()
+    public IEnumerator Battery()
     {
+        if (min == 3)
+            batterySpeed *= GameManager.Inst.everySpeed;
+
         if (batterStart == true)
         {
-            if (batterySlider.value > 0)
-                batterySlider.value -= Time.unscaledDeltaTime;
 
-            else
-                Debug.Log("battery Zero.");
+            if (batterySlider.value > 0)
+                batterySlider.value -= batterySpeed * Time.unscaledDeltaTime;
+
+            else if(batterySlider.value <= 0)
+            {
+                loseCheck.SetActive(true);
+
+                yield return new WaitForSeconds(1);
+
+                Time.timeScale = 0;
+                SceneManager.LoadScene("Title");
+            }
         }
     }
 
     public void Timer()
     {
+        switch (min)
+        {
+            case 3:
+                GameManager.Inst.everySpeed = 0.8f;
+                break;
+
+            case 1:
+                SoundManager.instance.PlaySoundClip("LastTime", SoundType.BGM, 1f);
+                GameManager.Inst.everySpeed = 0.6f;
+                break;
+        }
+
+
         if (timerStart == true)
         {
             time -= Time.deltaTime;
@@ -276,6 +306,8 @@ public class UIManager : MonoBehaviour
             {
                 timeText[0].text = 0.ToString();
                 timeText[1].text = 0.ToString();
+
+                SceneManager.LoadScene("Ending");
             }
 
             else

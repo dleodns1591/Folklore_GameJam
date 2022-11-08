@@ -45,11 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSpawner:
-  - {fileID: 756660366293574914, guid: 78f423458c30b4942ad704ae634faac8, type: 3}
+  - {fileID: 1791517252452815473, guid: 78f423458c30b4942ad704ae634faac8, type: 3}
   - {fileID: 986147597058113315, guid: b7ee38ce12cc10a499dfbfe712210b95, type: 3}
   - {fileID: 4394213327565273776, guid: e7ce6c43aa316e44ab6b2b4adcf4c9b3, type: 3}
   - {fileID: 1844479075143514381, guid: bf2fc1579dc2d634781f96449cb95f11, type: 3}
-  gameSpawnBox: []
   gameBoy: {fileID: 0}
   ingameScreen: {fileID: 0}
   isPushCheck: 0

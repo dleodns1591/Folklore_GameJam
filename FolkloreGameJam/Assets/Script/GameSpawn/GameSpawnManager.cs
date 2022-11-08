@@ -8,7 +8,6 @@ public class GameSpawnManager : MonoBehaviour
     void Awake() => Inst = this;
 
     public List<GameObject> gameSpawner = new List<GameObject>();
-    public List<GameObject> gameSpawnBox = new List<GameObject>();
 
     public GameObject gameBoy;
     public GameObject ingameScreen;

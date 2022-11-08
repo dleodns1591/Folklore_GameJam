@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameSpawn : MonoBehaviour
 {
@@ -15,14 +15,12 @@ public class GameSpawn : MonoBehaviour
     }
     public EGame eGame;
 
+    public GameObject loseCheck;
+
     [Header("게임 : 다트")]
     public GameObject dartGame;
     public GameObject dartTarget;
     public GameObject gameTitleBackGround;
-
-    public TextMeshProUGUI descriptionText;
-
-    public Rigidbody2D dartRigidbody2D;
 
     [Header("게임 : 제기차기")]
     public GameObject jegiPoint;
@@ -58,44 +56,76 @@ public class GameSpawn : MonoBehaviour
                 float posXRandom = Random.Range(minX, maxX);
                 float posYRandom = Random.Range(minY, maxY);
 
-                descriptionText.text = "Dart";
                 yield return new WaitForSeconds(2f);
 
                 gameTitleBackGround.SetActive(false);
 
-                Instantiate(dartTarget, new Vector2(posXRandom, posYRandom), Quaternion.identity, dartGame.transform);
+                yield return new WaitForSeconds(15f);
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+
+                loseCheck.SetActive(true);
+                Time.timeScale = 0;
+                DOTween.KillAll();
+                yield return new WaitForSecondsRealtime(1f);
+                SceneManager.LoadScene("Title");
+
                 break;
             #endregion
 
             #region 제기차기
             case EGame.EJegichagi:
 
-                descriptionText.text = "Jegichagi";
                 yield return new WaitForSeconds(2f);
 
                 gameTitleBackGround.SetActive(false);
                 GameSpawnManager.Inst.isJegiSummon = true;
-                jegiPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.jegiPointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+                jegiPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.jegiPointSpeed * GameManager.Inst.everySpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+
+                yield return new WaitForSeconds(15f);
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+
+                loseCheck.SetActive(true);
+                Time.timeScale = 0;
+                DOTween.KillAll();
+                yield return new WaitForSecondsRealtime(1f);
+                SceneManager.LoadScene("Title");
+
                 break;
             #endregion
 
             #region 줄다리기
             case EGame.ETugofwar:
-                descriptionText.text = "Tugofwar";
                 yield return new WaitForSeconds(2f);
                 gameTitleBackGround.SetActive(false);
                 GameSpawnManager.Inst.isLineSummon = true;
+
+                yield return new WaitForSeconds(15f);
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+
+                loseCheck.SetActive(true);
+                Time.timeScale = 0;
+                DOTween.KillAll();
+                yield return new WaitForSecondsRealtime(1f);
+                SceneManager.LoadScene("Title");
                 break;
             #endregion
 
             case EGame.EDarumaOtoshi:
 
-                descriptionText.text = "DarumaOtoshi";
                 yield return new WaitForSeconds(2f);
 
                 gameTitleBackGround.SetActive(false);
                 GameSpawnManager.Inst.isPieceSummon = true;
-                hammerPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.piecePointSpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+                hammerPoint.transform.DOLocalMoveX(-pointPos, GameSpawnManager.Inst.piecePointSpeed * GameManager.Inst.everySpeed).SetEase(Ease.InFlash).SetLoops(-1, LoopType.Yoyo);
+
+                yield return new WaitForSeconds(15f);
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+
+                loseCheck.SetActive(true);
+                Time.timeScale = 0;
+                DOTween.KillAll();
+                yield return new WaitForSecondsRealtime(1f);
+                SceneManager.LoadScene("Title");
                 break;
         }
     }

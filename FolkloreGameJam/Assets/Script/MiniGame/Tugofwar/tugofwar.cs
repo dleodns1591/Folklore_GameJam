@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class tugofwar : MonoBehaviour
 {
     public GameObject tugofwarGame;
+
+    public GameObject winCheck;
+    public GameObject loseCheck;
 
     void Start()
     {
@@ -15,23 +19,25 @@ public class tugofwar : MonoBehaviour
     {
         if (GameSpawnManager.Inst.isLineSummon == true)
         {
-            MyMove();
             EnemyMove();
         }
+
+        if(GameManager.Inst.isScreenDownCheck == true)
+            MyMove();
     }
 
     void MyMove()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            float fMove = Time.deltaTime * GameSpawnManager.Inst.mySpeed;
+            float fMove = Time.deltaTime * (GameSpawnManager.Inst.mySpeed * GameManager.Inst.everySpeed);
             transform.Translate(Vector3.left * fMove);
         }
     }
 
     void EnemyMove()
     {
-        float fMove = Time.deltaTime * GameSpawnManager.Inst.enemySpped;
+        float fMove = Time.deltaTime * (GameSpawnManager.Inst.enemySpped * GameManager.Inst.everySpeed);
         transform.Translate(Vector3.right * fMove);
     }
 
@@ -39,22 +45,25 @@ public class tugofwar : MonoBehaviour
     {
         if (collision.CompareTag("Tugofwar_Win"))
         {
-            Debug.Log("½Â¸®");
+            SoundManager.instance.PlaySoundClip("success", SoundType.SFX, 10f);
+            winCheck.SetActive(true);
+
             Time.timeScale = 0;
             yield return new WaitForSecondsRealtime(1);
-
             Destroy(tugofwarGame);
             GameSpawnManager.Inst.Game_Summon();
         }
 
         if (collision.CompareTag("Tugofwar_Lose"))
         {
-            Debug.Log("ÆÐ¹è");
+            SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+            loseCheck.SetActive(true);
 
             Time.timeScale = 0;
             yield return new WaitForSecondsRealtime(1);
 
-            Destroy(tugofwarGame);
+            GameManager.Inst.Initialization();
+            SceneManager.LoadScene("Title");
         }
     }
 

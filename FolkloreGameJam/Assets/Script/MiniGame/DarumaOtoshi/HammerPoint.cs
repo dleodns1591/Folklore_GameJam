@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class HammerPoint : MonoBehaviour
 {
+    public GameObject winCheck;
+    public GameObject loseCheck;
+
     [Header("주요요소")]
     public GameObject timingRange;
     public GameObject timingBar;
@@ -29,7 +33,8 @@ public class HammerPoint : MonoBehaviour
 
     void Update()
     {
-        Point_MouseEvent();
+        if (GameManager.Inst.isScreenDownCheck == true)
+            Point_MouseEvent();
     }
 
     void TimingRange_Move() => timingRange.transform.DOLocalMoveX(Random.Range(-timingRangeX, timingRangeX), 0);
@@ -38,6 +43,7 @@ public class HammerPoint : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && GameSpawnManager.Inst.isPieceClickCheck == false && GameSpawnManager.Inst.isPieceSummon == true)
         {
+            SoundManager.instance.PlaySoundClip("DarumaOtosi", SoundType.SFX, 10f);
             GameSpawnManager.Inst.isPieceClickCheck = true;
         }
     }
@@ -74,11 +80,14 @@ public class HammerPoint : MonoBehaviour
                     Debug.Log("다음");
                     BoolValue();
                 }
-                
+
                 else
                 {
-                    Debug.Log("승리");
+                    winCheck.SetActive(true);
+                    SoundManager.instance.PlaySoundClip("success", SoundType.SFX, 10f);
+
                     yield return new WaitForSeconds(1f);
+                    collision.transform.DOKill();
                     Time.timeScale = 0;
                     Destroy(darumaOtoshi_Game);
 
@@ -92,12 +101,13 @@ public class HammerPoint : MonoBehaviour
         {
             if (GameSpawnManager.Inst.isPieceClickCheck == true && isCheck == false && isCollisionCheck == false)
             {
-                Debug.Log("패배");
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+                loseCheck.SetActive(false);
                 isCheck = true;
 
                 yield return new WaitForSeconds(1);
-                Time.timeScale = 0;
-                Destroy(darumaOtoshi_Game);
+                GameManager.Inst.Initialization();
+                SceneManager.LoadScene("Title");
             }
         }
 

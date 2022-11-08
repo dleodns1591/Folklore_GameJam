@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+
 public class JegiPoint : MonoBehaviour
 {
+    public GameObject winCheck;
+    public GameObject loseCheck;
+
     [Header("주요요소")]
     public GameObject jegi;
     public GameObject timingRange;
@@ -31,7 +36,8 @@ public class JegiPoint : MonoBehaviour
 
     void Update()
     {
-        Point_MouseEvent();
+        if (GameManager.Inst.isScreenDownCheck == true)
+            Point_MouseEvent();
     }
 
     void TimingRange_Move() => timingRange.transform.DOLocalMoveX(Random.Range(-timingRangeX, timingRangeX), 0);
@@ -40,6 +46,7 @@ public class JegiPoint : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && GameSpawnManager.Inst.isJegiClickCheck == false && GameSpawnManager.Inst.isJegiSummon == true)
         {
+            SoundManager.instance.PlaySoundClip("kick", SoundType.SFX, 10f);
             GameSpawnManager.Inst.isJegiClickCheck = true;
             transform.DOKill();
         }
@@ -53,7 +60,9 @@ public class JegiPoint : MonoBehaviour
 
             if (GameSpawnManager.Inst.isJegiClickCheck == true && isCheck == false && isCollisionCheck == true)
             {
-                Debug.Log("승리");
+                SoundManager.instance.PlaySoundClip("success", SoundType.SFX, 10f);
+                winCheck.SetActive(true);
+
                 isCheck = true;
                 playerNotKick.SetActive(false);
                 playerKick.SetActive(true);
@@ -73,15 +82,16 @@ public class JegiPoint : MonoBehaviour
         {
             if (GameSpawnManager.Inst.isJegiClickCheck == true && isCheck == false && isCollisionCheck == false)
             {
-                Debug.Log("패배");
+                SoundManager.instance.PlaySoundClip("fail", SoundType.SFX, 10f);
+                loseCheck.SetActive(true); 
                 isCheck = true;
 
                 jegi.transform.DOLocalMoveY(-250, 0);
                 jegi.transform.DORotate(new Vector3(0, 0, 33), 0);
 
                 yield return new WaitForSeconds(1);
-                Time.timeScale = 0;
-                Destroy(jegichagiGame);
+                GameManager.Inst.Initialization();
+                SceneManager.LoadScene("Title");
             }
         }
 
